@@ -12,17 +12,17 @@
 <body>
   <header class="topbar">
     <nav class="nav wrap" aria-label="Navigazione principale">
-      <a class="brand" href="#inizio" aria-label="Cristian Moretti, back to top" data-i18n-aria-label="brand.home">
-        <span class="brand-mark" aria-hidden="true">CM</span>
-        <span>Cristian Moretti</span>
-      </a>
       <div class="nav-links" data-i18n-aria-label="navigation.label" aria-label="Navigazione principale">
         <a href="#esperienza" data-i18n="navigation.experience">Esperienza</a>
         <a href="#competenze" data-i18n="navigation.skills">Competenze</a>
         <a href="#formazione" data-i18n="navigation.education">Formazione</a>
         <a href="#contatti" data-i18n="navigation.contact">Contatti</a>
       </div>
-      <button class="language-toggle" id="language-toggle" type="button" lang="en" aria-label="Switch to Italian">EN</button>
+      <button class="language-toggle" id="language-toggle" type="button" lang="en" aria-label="Switch to Italian" aria-pressed="false">
+        <span class="language-option language-option-en">EN</span>
+        <span class="language-option language-option-current" aria-hidden="true">IT</span>
+        <span class="language-toggle-thumb" aria-hidden="true"></span>
+      </button>
     </nav>
   </header>
 
@@ -161,12 +161,6 @@
     </section>
   </main>
 
-  <footer class="wrap">
-    <div class="footer-inner">
-      <span>© Cristian Moretti</span>
-      <span data-i18n="footer.location">Data Engineer · Torino, Italia</span>
-    </div>
-  </footer>
   <script src="script.js" defer></script>
 </body>
 </html>

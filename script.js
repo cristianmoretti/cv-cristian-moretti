@@ -5,7 +5,6 @@ const translations = {
     "language.button": "IT",
     "language.switchToEnglish": "Passa alla lingua inglese",
     "language.switchToItalian": "Passa alla lingua italiana",
-    "brand.home": "Cristian Moretti, torna all'inizio",
     "navigation.label": "Navigazione principale",
     "navigation.experience": "Esperienza",
     "navigation.skills": "Competenze",
@@ -65,7 +64,6 @@ const translations = {
     "education.highSchool": "Diploma di maturità scientifica",
     "contact.kicker": "Recapiti",
     "contact.heading": "Contatti",
-    "footer.location": "Data Engineer · Torino, Italia"
   },
   en: {
     title: "Cristian Moretti — Data Engineer",
@@ -73,7 +71,6 @@ const translations = {
     "language.button": "EN",
     "language.switchToEnglish": "Switch to English",
     "language.switchToItalian": "Switch to Italian",
-    "brand.home": "Cristian Moretti, back to top",
     "navigation.label": "Main navigation",
     "navigation.experience": "Experience",
     "navigation.skills": "Skills",
@@ -133,12 +130,18 @@ const translations = {
     "education.highSchool": "Scientific high school diploma",
     "contact.kicker": "Get in touch",
     "contact.heading": "Contact",
-    "footer.location": "Data Engineer · Turin, Italy"
   }
 };
 
 const languageToggle = document.querySelector("#language-toggle");
 const description = document.querySelector('meta[name="description"]');
+
+function equalizeEducationHeights() {
+  const educationItems = [...document.querySelectorAll(".education")];
+  educationItems.forEach((item) => { item.style.height = "auto"; });
+  const height = Math.max(...educationItems.map((item) => item.offsetHeight), 0);
+  educationItems.forEach((item) => { item.style.height = height ? `${height}px` : ""; });
+}
 
 function setLanguage(language) {
   const dictionary = translations[language];
@@ -161,16 +164,26 @@ function setLanguage(language) {
   });
 
   const nextLanguage = language === "it" ? "en" : "it";
-  languageToggle.textContent = dictionary["language.button"];
+  languageToggle.classList.toggle("is-italian", language === "it");
   languageToggle.lang = language;
+  languageToggle.setAttribute("aria-pressed", String(language === "it"));
   languageToggle.setAttribute("aria-label", dictionary[`language.switchTo${nextLanguage === "en" ? "English" : "Italian"}`]);
+  equalizeEducationHeights();
 }
 
 languageToggle.addEventListener("click", () => {
-  setLanguage(document.documentElement.lang === "it" ? "en" : "it");
+  if (document.body.classList.contains("is-language-switching")) return;
+
+  const nextLanguage = document.documentElement.lang === "it" ? "en" : "it";
+  document.body.classList.add("is-language-switching");
+  window.setTimeout(() => {
+    setLanguage(nextLanguage);
+    window.requestAnimationFrame(() => document.body.classList.remove("is-language-switching"));
+  }, 160);
 });
 
 setLanguage("en");
+window.addEventListener("resize", equalizeEducationHeights);
 
 const careerJobs = document.querySelectorAll(".job");
 const careerLinks = new Map(
